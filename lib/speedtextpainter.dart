@@ -18,14 +18,14 @@ class SpeedTextPainter extends CustomPainter {
     SpeedTextPainter({this.start, this.end, this.value})
         : tickPaint = new Paint(),
             textPainter = new TextPainter(
-                textAlign: TextAlign.center,
-                textDirection: TextDirection.rtl,
+                textAlign: TextAlign.start,
+                textDirection: TextDirection.ltr,
             ),
             textStyle = const TextStyle(
-                color: Colors.black,
+                color: Colors.transparent,
                 fontSize: 15.0,
             ) {
-        tickPaint.color = Colors.white;
+        tickPaint.color = Colors.transparent;
     }
     
     @override
@@ -50,7 +50,7 @@ class SpeedTextPainter extends CustomPainter {
             
             //draw the text
             if (i == 40 || i == 20) {
-                String label = i == 40 ? start.toString() : this.end.toString();
+                String label = i == 40 ? start.toString() : this.end.toString() + '  ';
                 canvas.save();
                 canvas.translate(i == 40 ? -20.0 : 20.0, -radius + 50.0);
                 
@@ -69,15 +69,15 @@ class SpeedTextPainter extends CustomPainter {
                 
                 canvas.restore();
             } else if (i == 30) {
-                String label = this.value.toStringAsFixed(1);
+                String label = this.value.toStringAsFixed(2);
                 canvas.save();
                 canvas.translate(0.0, -radius + 50.0);
                 
                 textPainter.text = new TextSpan(
                     text: label,
                     style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 35.0,
+                        color: Colors.transparent,
+                        fontSize: 32.0,
                     ),
                 );
                 canvas.rotate(-angle * i);
@@ -85,7 +85,7 @@ class SpeedTextPainter extends CustomPainter {
                 textPainter.layout();
                 
                 textPainter.paint(canvas,
-                    new Offset(-(textPainter.width / 2), -(textPainter.height / 2)));
+                    new Offset(-(textPainter.width), -(textPainter.height)));
                 
                 canvas.restore();
             }
